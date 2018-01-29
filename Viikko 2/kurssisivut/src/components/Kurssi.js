@@ -8,6 +8,7 @@ const Kurssi = ({ kurssi }) => {
         <div>
             <Otsikko kurssi={kurssi} />
             <Sisalto kurssi={kurssi} />
+            <Yhteensa kurssi={kurssi} />
         </div>
     )
 }

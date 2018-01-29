@@ -1,8 +1,12 @@
 import React from 'react'
 
 const Yhteensa = ({ kurssi }) => {
+    let summa = kurssi.osat.reduce(function (a, b) {
+        return a + b.tehtavia
+    }, 0)
+
     return (
-        <p>yhteensä {kurssi.osat[0].tehtavia + kurssi.osat[1].tehtavia + kurssi.osat[2].tehtavia} tehtävää</p>
+        <p>yhteensä {summa} tehtävää</p>
     )
 } 
 
