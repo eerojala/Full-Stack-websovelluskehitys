@@ -1,6 +1,7 @@
 import React from 'react';
 import Entries from './components/Entries'
 import EntryForm from './components/EntryForm'
+import Filter from './components/Filter'
 
 
 class App extends React.Component {
@@ -8,13 +9,14 @@ class App extends React.Component {
     super(props)
     this.state = {
       persons: [
-        { 
-          name: 'Arto Hellas',
-          number: '040-123456' 
-        }
+        { name: 'Arto Hellas', number: '040-123456' },
+        { name: 'Martti Tienari', number: '040-123456' },
+        { name: 'Arto Järvinen', number: '040-123456' },
+        { name: 'Lea Kutvonen', number: '040-123456' }
       ],
       newName: '',
-      newNumber: ''
+      newNumber: '',
+      filter: ''
     }
   }
 
@@ -46,10 +48,18 @@ class App extends React.Component {
     this.setState({ newNumber: event.target.value })
   }
 
+  handleFilterChange = (event) => {
+    this.setState({ filter: event.target.value })
+  }
+
   render() {
     return (
       <div>
         <h2>Puhelinluettelo</h2>
+        <Filter 
+          filter={this.state.filter} 
+          handleFilterChange={this.handleFilterChange}
+        />
         <EntryForm 
           addPerson={this.addPerson}
           handleNameChange={this.handleNameChange}
@@ -57,7 +67,10 @@ class App extends React.Component {
           newName={this.state.newName}
           newNumber={this.state.newNumber}
         />
-        <Entries persons={this.state.persons} />
+        <Entries 
+          persons={this.state.persons}
+          filter={this.state.filter}  
+        />
       </div>
     )
   }
