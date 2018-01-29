@@ -1,5 +1,6 @@
 import React from 'react';
 import Entries from './components/Entries'
+import EntryForm from './components/EntryForm'
 
 
 class App extends React.Component {
@@ -7,9 +8,13 @@ class App extends React.Component {
     super(props)
     this.state = {
       persons: [
-        { name: 'Arto Hellas' }
+        { 
+          name: 'Arto Hellas',
+          number: '040-123456' 
+        }
       ],
-      newName: ''
+      newName: '',
+      newNumber: ''
     }
   }
 
@@ -19,12 +24,17 @@ class App extends React.Component {
 
     if (!found) {
       let newPerson = {
-        name: this.state.newName
+        name: this.state.newName,
+        number: this.state.newNumber
       }
   
       const persons = this.state.persons.concat(newPerson)
   
-      this.setState({ persons })
+      this.setState({ 
+        persons,
+        newName: '',
+        newNumber: '', 
+      })
     }
   }
 
@@ -32,21 +42,21 @@ class App extends React.Component {
     this.setState({ newName: event.target.value })
   }
 
+  handleNumberChange = (event) => {
+    this.setState({ newNumber: event.target.value })
+  }
+
   render() {
     return (
       <div>
         <h2>Puhelinluettelo</h2>
-        <form onSubmit={this.addPerson}>
-          <div>
-            nimi: <input 
-              value={this.state.newName}
-              onChange={this.handleNameChange}
-            />
-          </div>
-          <div>
-            <button type="submit">Lisää</button>
-          </div>
-        </form>
+        <EntryForm 
+          addPerson={this.addPerson}
+          handleNameChange={this.handleNameChange}
+          handleNumberChange={this.handleNumberChange}
+          newName={this.state.newName}
+          newNumber={this.state.newNumber}
+        />
         <Entries persons={this.state.persons} />
       </div>
     )

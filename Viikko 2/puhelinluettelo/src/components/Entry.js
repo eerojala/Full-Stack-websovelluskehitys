@@ -1,8 +1,11 @@
 import React from 'react'
 
-const Entry = ({ entry }) => {
+const Entry = ({ person }) => {
     return (
-        <p>{entry.name}</p>
+        <tr>
+            <td>{person.name}</td>
+            <td>{person.number}</td>
+        </tr>
     )
 }
 
