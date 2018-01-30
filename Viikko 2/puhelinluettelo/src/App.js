@@ -24,11 +24,30 @@ class App extends React.Component {
       })
   }
 
+  updateNumber = (person) => {
+    if (window.confirm(`${person.name} on jo luettelossa, korvataanko vanha humero uudella?`)) {
+      const changedPerson = { ...person, number: this.state.newNumber }
+
+      personService
+        .update(person.id, changedPerson)
+        .then(changedPerson => {
+          const persons = this.state.persons.filter(other => other.id !== person.id)
+          this.setState({
+            persons: persons.concat(changedPerson),
+            newName: '',
+            newNumber: ''
+          })
+        })
+    }
+  }
+
   addPerson = (event) => {
     event.preventDefault()
     let found = this.state.persons.find(person => person.name === this.state.newName)
 
-    if (!found) {
+    if (found) {
+      this.updateNumber(found)
+    } else {
       let personObject = {
         name: this.state.newName,
         number: this.state.newNumber

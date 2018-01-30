@@ -14,6 +14,11 @@
       "name": "Arto Järvinen",
       "number": "040-123456",
       "id": 3
+    },
+    {
+      "name": "Eero Ojala",
+      "number": "050-987654",
+      "id": 4
     }
   ]
 }
