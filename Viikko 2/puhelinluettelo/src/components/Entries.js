@@ -1,7 +1,7 @@
 import React from 'react'
 import Entry from './Entry'
 
-const Entries = ({ persons, filter }) => {
+const Entries = ({ persons, filter, removePerson }) => {
     const filterByName = (person) => {
         return person.name.toUpperCase().includes(filter.toUpperCase())
     }
@@ -9,7 +9,11 @@ const Entries = ({ persons, filter }) => {
     const filteredPersons = persons.filter(filterByName)
 
     const entryElements = () => filteredPersons.map(person => 
-        <Entry key={person.name} person={person} />
+        <Entry 
+            key={person.id} 
+            person={person} 
+            removePerson={removePerson(person.id)} 
+        />
     )
 
     return (

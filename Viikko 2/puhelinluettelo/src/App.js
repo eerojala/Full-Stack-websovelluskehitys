@@ -46,6 +46,23 @@ class App extends React.Component {
     }
   }
 
+  removePerson = (id) => {
+    return () => {
+      const person = this.state.persons.find(person => person.id === id)
+
+      if (window.confirm(`Poistetaanko ${person.name}?`)) {
+        personService
+          .remove(id)
+          .then(response => {
+          const persons = this.state.persons.filter(person => person.id !== id)
+            this.setState({
+              persons
+            })
+          })
+      }
+    }
+  }
+
   handleNameChange = (event) => {
     this.setState({ newName: event.target.value })
   }
@@ -75,7 +92,8 @@ class App extends React.Component {
         />
         <Entries 
           persons={this.state.persons}
-          filter={this.state.filter}  
+          filter={this.state.filter}
+          removePerson={this.removePerson}  
         />
       </div>
     )
