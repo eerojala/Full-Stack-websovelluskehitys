@@ -2,7 +2,7 @@ import React from 'react';
 import Entries from './components/Entries'
 import EntryForm from './components/EntryForm'
 import Filter from './components/Filter'
-import axios from 'axios'
+import personService from './services/persons'
 
 
 class App extends React.Component {
@@ -17,10 +17,10 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    axios
-      .get("http://localhost:3001/persons")
+    personService
+      .getAll()
       .then(response => {
-        this.setState({ persons: response.data })
+        this.setState({ persons: response })
       })
   }
 
@@ -29,18 +29,20 @@ class App extends React.Component {
     let found = this.state.persons.find(person => person.name === this.state.newName)
 
     if (!found) {
-      let newPerson = {
+      let personObject = {
         name: this.state.newName,
         number: this.state.newNumber
       }
   
-      const persons = this.state.persons.concat(newPerson)
-  
-      this.setState({ 
-        persons,
-        newName: '',
-        newNumber: '', 
-      })
+      personService
+        .create(personObject)
+        .then(newPerson => {
+          this.setState({
+            persons: this.state.persons.concat(newPerson),
+            newName: '',
+            newNumber: ''
+          })
+        })
     }
   }
 
