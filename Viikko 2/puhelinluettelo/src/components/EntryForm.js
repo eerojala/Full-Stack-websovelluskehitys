@@ -3,7 +3,7 @@ import React from 'react'
 const EntryForm = (props) => {
     return(
         <div>
-            <h2>Lisää uusi</h2>
+            <h2>Lisää uusi / muuta olemassaolevaa numeroa</h2>
             <form onSubmit={props.addPerson}>
                 <div>
                     Nimi: <input 

@@ -2,6 +2,7 @@ import React from 'react';
 import Entries from './components/Entries'
 import EntryForm from './components/EntryForm'
 import Filter from './components/Filter'
+import Notification from './components/Notification'
 import personService from './services/persons'
 
 
@@ -12,7 +13,9 @@ class App extends React.Component {
       persons: [],
       newName: '',
       newNumber: '',
-      filter: ''
+      filter: '',
+      notification: '',
+      notificationClass: ''
     }
   }
 
@@ -38,7 +41,25 @@ class App extends React.Component {
             newNumber: ''
           })
         })
+        .catch(error => {
+          this.setState({
+            notification: `Henkilön ${person.name} numeron päivitys epäonnistui - henkilöä ei ole enää olemassa puhelinluettelossa`,
+            notificationClass: 'error',
+            persons: this.state.persons.filter(p => p.id !== person.id)
+          })
+
+          this.nullifyNotification()
+        })
     }
+  }
+
+  nullifyNotification = () => {
+    setTimeout(() => {
+      this.setState({
+        notification: null,
+        notificationClass: null
+      })
+    }, 5000)
   }
 
   addPerson = (event) => {
@@ -58,9 +79,13 @@ class App extends React.Component {
         .then(newPerson => {
           this.setState({
             persons: this.state.persons.concat(newPerson),
+            notification: `Lisättiin ${newPerson.name}`,
+            notificationClass: 'success',
             newName: '',
             newNumber: ''
           })
+
+          this.nullifyNotification()
         })
     }
   }
@@ -98,6 +123,7 @@ class App extends React.Component {
     return (
       <div>
         <h2>Puhelinluettelo</h2>
+        <Notification message={this.state.notification} className={this.state.notificationClass} />
         <Filter 
           filter={this.state.filter} 
           handleFilterChange={this.handleFilterChange}

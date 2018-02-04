@@ -1,5 +1,6 @@
 import React from 'react'
-import Note from './components/Note' 
+import Note from './components/Note'
+import Notification from './components/Notification' 
 import noteService from './services/notes'
 
 class App extends React.Component {
@@ -8,7 +9,8 @@ class App extends React.Component {
       this.state = {
         notes: [],
         newNote: 'uusi muistiinpano...',
-        showAll: true
+        showAll: true,
+        error: null
       }
     }
 
@@ -60,8 +62,14 @@ class App extends React.Component {
                     })
                 })
                 .catch(error => {
-                    alert(`muistiinpano '${note.content}' on jo valitettavasti poistettu palvelimelta`)
-                    this.setState({ notes: this.state.notes.filter(n => n.id !== id )})
+                    this.setState({
+                        error: `muistiinpano ${note.content} on jo valitettavasti poistettu palvelimelta`,
+                        notes: this.state.notes.filter(n => n.id !== id)
+                    })
+
+                    setTimeout(() => {
+                        this.setState({error: null})
+                    }, 5000)
                 })
         }
     }
@@ -77,6 +85,8 @@ class App extends React.Component {
         return (
             <div>
             <h1>Muistiinpanot</h1>
+
+            <Notification message={this.state.error} />
 
             <div>
                 <button onClick={this.toggleVisible}>
