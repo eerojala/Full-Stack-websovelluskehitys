@@ -1,0 +1,1 @@
+HUOM!! Merkitsin tehtävän 2.18 tehdyksi vaikka unohdin tehdä ilmoituksen henkilön poistoon ja numeron päivitykseen. Minulta voi siis vähentää tehtävästä 2.18 saadun pisteen pois.
