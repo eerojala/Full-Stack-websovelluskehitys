@@ -1,5 +1,3 @@
-import React from 'react'
-
 const initialState = {
     good: 0,
     ok: 0,
@@ -8,32 +6,33 @@ const initialState = {
   
   const feedbackReducer = (state = initialState, action) => {
     switch (action.type) {
-      case 'GOOD':
-        return {
-            good: state.good + 1,
-            ok: state.ok,
-            bad: state.bad
-        }
-      case 'OK':
-        return {
-            good: state.good,
-            ok: state.ok + 1,
-            bad: state.bad
-        }
-      case 'BAD':
-        return {
-            good: state.good,
-            ok: state.ok,
-            bad: state.bad + 1
-        }
-      case 'ZERO':
-        return {
-            good: 0,
-            ok: 0,
-            bad: 0
-        }
+        case 'GOOD':
+            return {
+                good: state.good + 1,
+                ok: state.ok,
+                bad: state.bad
+            }
+        case 'OK':
+            return {
+                good: state.good,
+                ok: state.ok + 1,
+                bad: state.bad
+            }
+        case 'BAD':
+            return {
+                good: state.good,
+                ok: state.ok,
+                bad: state.bad + 1
+            }
+        case 'ZERO':
+            return {
+                good: 0,
+                ok: 0,
+                bad: 0
+            }
+        default:
+            return state
     }
-    return state
   }
   
   export default feedbackReducer

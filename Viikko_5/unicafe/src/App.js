@@ -1,54 +1,62 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { createStore } from 'redux'
+import feedbackReducer from './feedbackReducer'
+
+const store = createStore(feedbackReducer)
 
 const Statistics = () => {
-  const feedback = 0
+  const state = store.getState()
+  const feedbackAmount = state.good + state.ok + state.bad
+  const average = Math.round((state.good + (-1 * state.bad)) / feedbackAmount * 10) / 10
+  const positiveRatio = Math.round((state.good / feedbackAmount) * 1000) / 10
 
-  if (feedback === 0) {
+  if (feedbackAmount === 0) {
     return (
       <div>
-        <h2>stataistiikka</h2>
-        <div>ei yhtään palautetta annettu</div>
+        <h2>Statistiikka</h2>
+        <div>Ei yhtään palautetta annettu</div>
       </div>
     )
   }
 
   return (
     <div>
-      <h2>statistiikka</h2>
+      <h2>Statistiikka</h2>
       <table>
         <tbody>
           <tr>
-            <td>hyvä</td>
-            <td></td>
+            <td>Hyvä</td>
+            <td>{state.good}</td>
           </tr>
           <tr>
-            <td>neutraali</td>
-            <td></td>
+            <td>Neutraali</td>
+            <td>{state.ok}</td>
           </tr>
           <tr>
-            <td>huono</td>
-            <td></td>
+            <td>Huono</td>
+            <td>{state.bad}</td>
           </tr>
           <tr>
-            <td>keskiarvo</td>
-            <td></td>
+            <td>Keskiarvo</td>
+            <td>{average}</td>
           </tr>
           <tr>
-            <td>positiivisia</td>
-            <td></td>
+            <td>Positiivisia</td>
+            <td>{positiveRatio}%</td>
           </tr>
         </tbody>
       </table>
 
-      <button>nollaa tilasto</button>
+      <button onClick={e => store.dispatch({ type: 'ZERO' })}>nollaa tilasto</button>
     </div >
   )
 }
 
 class App extends React.Component {
-  click = (nappi) => () => {
 
+  click = (button) => () => {
+    store.dispatch({ type: button })
   }
 
   render() {
@@ -63,5 +71,12 @@ class App extends React.Component {
     )
   }
 }
+
+
+const render = () => {
+  ReactDOM.render(<App />, document.getElementById('root'))
+}
+
+store.subscribe(render)
 
 export default App
