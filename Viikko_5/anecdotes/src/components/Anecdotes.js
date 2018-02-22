@@ -3,11 +3,7 @@ import actionFor from '../actionCreators'
 import Anecdote from './Anecdote'
 
 class Anecdotes extends React.Component {
-    vote = (id) => () => {
-        this.props.store.dispatch(
-            actionFor.vote(id)
-        )
-    }
+    vote = (id) => () => { this.props.store.dispatch(actionFor.vote(id)) }
 
     render() {
         const anecdotes = this.props.store.getState()
