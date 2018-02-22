@@ -1,0 +1,1 @@
+Viikon 3 tehtävä: Puhelinluettelosovelluksen backend (+ buildiversio frontendistä): https://github.com/eerojala/phonebook_fullstack
