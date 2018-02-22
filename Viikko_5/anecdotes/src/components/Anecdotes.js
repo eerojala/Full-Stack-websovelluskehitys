@@ -11,6 +11,7 @@ class Anecdotes extends React.Component {
 
     render() {
         const anecdotes = this.props.store.getState()
+        anecdotes.sort( (a, b) => { return b.votes - a.votes } )
 
         return(
             <div>
